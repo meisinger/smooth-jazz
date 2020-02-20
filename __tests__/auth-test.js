@@ -18,7 +18,6 @@ const auth_failure = Promise.reject({
   error: 'idiot'
 })
 
-
 describe('with auth logic', () => {
   let stream$ = undefined
 

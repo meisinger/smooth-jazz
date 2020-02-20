@@ -7,7 +7,7 @@ const validate = (validators) => (value) => {
     .map(result => result.errorMessage)
 
   return {
-    error: (errors && !errors.length),
+    error: (errors && !!errors.length),
     errorMessage: errors.shift()
   }
 }
@@ -61,4 +61,9 @@ export default class extends DataSubject {
     error: false,
     errorMessage: undefined
   }))
+
+  validate = () => {
+    const { data, validate } = this.value
+    this.set(validate(data))
+  }
 }
