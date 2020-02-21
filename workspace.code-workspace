@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+      "path": ".",
+		}
+  ],
+	"settings": {
+    "files.exclude": {
+      ".buckconfig": true,
+      ".flowconfig": true,
+      ".gitattributes": true,
+      ".prettierrc.js": true,
+      ".watchmanconfig": true,
+      "yarn.lock": true,
+      "**/node_modules": true,
+      "**/android": true,
+      "**/ios": true,
+      "**/coverage": true
+    }
+  }
+}

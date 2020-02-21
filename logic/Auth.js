@@ -1,7 +1,7 @@
 import storage from '@react-native-community/async-storage'
 import { BehaviorSubject } from 'rxjs'
 import { DataSubject } from './subjects'
-import { AuthRepository } from './repos'
+import { ApiContext, AuthRepository } from './repos'
 import { AuthForm } from './forms'
 
 export const AuthTypes = {
@@ -54,7 +54,8 @@ export default new class {
     this._controller.set({ type: AuthTypes.SIGNIN })
     this._form.clear()
 
-    await this._repository.signin(payload)
+    await ApiContext.execute('API.AUTH', async () => 
+      this._repository.signin(payload)
       .then(async (data) => {
         const { access_token, refresh_token, ...auth } = data
         await this._set_tokens(access_token, refresh_token)
@@ -74,6 +75,7 @@ export default new class {
           profile: undefined
         })
       })
+    )
   }
   
   logout = async () => {
