@@ -14,6 +14,8 @@ export const AuthTypes = {
 
 export default new class {
   constructor() {
+    this.API_CONTEXT = 'api.auth.context'
+
     this._repository = new AuthRepository()
     this._form = new AuthForm()
 
@@ -54,7 +56,7 @@ export default new class {
     this._controller.set({ type: AuthTypes.SIGNIN })
     this._form.clear()
 
-    await ApiContext.execute('API.AUTH', async () => 
+    await ApiContext.execute(this.API_CONTEXT, async () => 
       this._repository.signin(payload)
       .then(async (data) => {
         const { access_token, refresh_token, ...auth } = data

@@ -1,5 +1,5 @@
 import { DataSubject } from './subjects'
-import { UsersRepository } from './repos'
+import { ApiContext, UsersRepository } from './repos'
 
 export const UsersTypes = {
   EMPTY: 'users.empty',
@@ -9,6 +9,8 @@ export const UsersTypes = {
 
 export default new class {
   constructor() {
+    this.API_CONTEXT = 'api.users.context'
+
     this._repository = new UsersRepository()
     this._controller = new DataSubject({
       type: UsersTypes.EMPTY,
@@ -28,7 +30,8 @@ export default new class {
   }
 
   list = async () => {
-    await this._repository.list()
+    await ApiContext.execute(this.API_CONTEXT, async () =>
+      this._repository.list()
       .then((data) => {
         this._controller.set({
           type: UsersTypes.LISTED,
@@ -40,5 +43,6 @@ export default new class {
           type: UsersTypes.ERROR
         })
       })
+    )
   }
 }

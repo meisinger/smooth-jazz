@@ -1,19 +1,19 @@
-import { BehaviorSubject } from 'rxjs'
-import { map, filter } from 'rxjs/operators'
+import { BehaviorSubject, of } from 'rxjs'
+import { mergeMap, map, filter } from 'rxjs/operators'
 
-export const ContextTypes = {
-  IDLE: 'repo.context.idle',
-  WAITING: 'repo.context.waiting',
-  REQUEST: 'repo.context.request',
-  SUCCESS: 'repo.context.success',
-  FAILURE: 'repo.context.failure'
+export const ApiContextTypes = {
+  IDLE: 'repo.api.context.idle',
+  WAITING: 'repo.api.context.waiting',
+  REQUEST: 'repo.api.context.request',
+  SUCCESS: 'repo.api.context.success',
+  FAILURE: 'repo.api.context.failure'
 }
 
 export default new class {
   constructor() {
     this._handles = new BehaviorSubject([])
     this._controller = new BehaviorSubject({
-      type: ContextTypes.IDLE
+      type: ApiContextTypes.IDLE
     })
 
     this._handles
@@ -21,8 +21,8 @@ export default new class {
         const waiting = handles.some(x => x.count > 0)
         this._controller.next({
           type: (waiting)
-            ? ContextTypes.WAITING
-            : ContextTypes.IDLE
+            ? ApiContextTypes.WAITING
+            : ApiContextTypes.IDLE
         })
       })
   }
@@ -32,17 +32,18 @@ export default new class {
   }
 
   get waiting() {
-    return this._controller
+    return (context) => this._handles
       .pipe(
-        map(_ => _.handles),
-        filter(_ => _.count > 0)
+        map(_ => _
+          .filter(x => !context ? true : x.context === context)
+          .some(x => x.count > 0))
       )
   }
 
   request = (context) => {
     const { value: handles = []} = this._handles
     const handle_entry = Object.assign({}, {
-      type: ContextTypes.REQUEST,
+      type: ApiContextTypes.REQUEST,
       context: context,
       count: 1
     })
@@ -70,7 +71,7 @@ export default new class {
       return
 
     const handle_entry = Object.assign({}, {
-      type: ContextTypes.SUCCESS,
+      type: ApiContextTypes.SUCCESS,
       context: context,
       count: 0
     })
@@ -93,7 +94,7 @@ export default new class {
       return
 
     const handle_entry = Object.assign({}, {
-      type: ContextTypes.FAILURE,
+      type: ApiContextTypes.FAILURE,
       context: context,
       count: 0
     })
@@ -107,9 +108,6 @@ export default new class {
 
     this._handles.next(update)
   }
-
-  context = (context) => this._handles
-      .pipe(filter(_ => _.context === context))
 
   execute = async (context, callback) => {
     this.request(context)
