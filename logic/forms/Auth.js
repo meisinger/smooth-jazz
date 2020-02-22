@@ -30,7 +30,10 @@ export default class {
   }
 
   valid = () => combineLatest(this._username, this._password)
-    .pipe(map(_ => 
-      _.every(x => x.dirty && x.validate(x.data))
-    ))
+    .pipe(map(result => {
+      const errors = result
+        .map(x => x.validate(x.data))
+        .some(x => x.error)
+      return !errors
+    }))
 }

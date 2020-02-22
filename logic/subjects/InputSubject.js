@@ -19,12 +19,12 @@ export default class extends DataSubject {
       dirty: false,
       error: false,
       errorMessage: undefined,
-      validate: () => ({ error: false, errorMessage: undefined })
+      validate: undefined
     })
 
-    this._initial = data
     this.validators = []
-    super.value.validate = validate(this.validators)
+    this._initial = data
+    super.value.validate = this._validate.bind(this, this.validators)
   }
 
   get asRequired() {
@@ -65,5 +65,16 @@ export default class extends DataSubject {
   validate = () => {
     const { data, validate } = this.value
     this.set(validate(data))
+  }
+
+  _validate = (validators, value) => {
+    const errors = validators.map(func => func(value))
+      .filter(result => result && result.error)
+      .map(result => result.errorMessage)
+
+    return {
+      error: (errors && !!errors.length),
+      errorMessage: errors.shift()
+    }
   }
 }

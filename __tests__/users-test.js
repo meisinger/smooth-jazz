@@ -1,5 +1,4 @@
 import 'react-native';
-import { skip, takeWhile, map } from 'rxjs/operators'
 import { UsersLogic, UsersTypes } from '../logic'
 import { default as UsersRepository } from '../logic/repos/Users'
 
@@ -43,7 +42,7 @@ describe('with users logic', () => {
       stream$ = UsersLogic.controller
         .subscribe({
           next: (data) => {
-            const { type, list } = data
+            const { type } = data
             expect(type).toBe(UsersTypes.LISTED)
             done()
           },
