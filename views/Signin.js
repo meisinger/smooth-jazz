@@ -23,27 +23,24 @@ const Component = () => {
   return (
     <Fragment>
       <StatusBar />
-      <SafeAreaView style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
-        <View>
-          <Text style={{fontSize: 20}} onPress={() => setCount(count + 1)}>Hello World</Text>
-        </View>
-        { loggedIn && (
-          <>
+      <SafeAreaView style={{flex: 1, justifyContent: 'center', backgroundColor: '#fefefe'}}>
+        <View style={{flex: 0.6, justifyContent: 'center'}}>
+          <View style={{alignItems: 'center', marginVertical: 10}}>
             <View>
-              <Text>{count}</Text>
+              <Text style={{fontSize: 20}} onPress={() => setCount(count + 1)}>Hello World</Text>
             </View>
             <View>
-              <Text>Big Boy</Text>
+              <Text onPress={() => setCount(count - 1)}>{count}</Text>
             </View>
-          </>
-        )}
-        <View>
-          <Text onPress={() => setCount(count - 1)}>{count}</Text>
-        </View>
-        <View>
-          <Input stream={form.username} placeholder='Username'
-            changed={form.username.changed}
-            autoCapitalize='none' autoCorrect={false}/>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <View style={{flex: 0.8}}>
+            <Input stream={form.username} placeholder='Username'
+            autoCapitalize='none' autoCorrect={false} />
+            <Input stream={form.password} placeholder='Password'
+            autoCapitalize='none' autoCorrect={false} secureTextEntry={true} />
+          </View>
+          </View>
         </View>
       </SafeAreaView>
     </Fragment>

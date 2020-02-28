@@ -31,6 +31,10 @@ export default class extends DataSubject {
     return Validators.asRequired(this)
   }
 
+  get asRule() {
+    return Validators.asRequiredRule(this)
+  }
+
   get asEmail() {
     return Validators.asEmail(this)
   }

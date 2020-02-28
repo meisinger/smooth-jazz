@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { View, TextInput } from 'react-native'
 import Placeholder from './Placeholder'
 
-export default (props) => {
-  const { stream, onFocus, placeholder, ...passThrough } = props
+export default ({ stream, placeholder, onFocus, ...props }) => {
   const [error, setError] = useState(false)
   const [active, setActive] = useState(false)
   const [placeholderActive, setPlaceholderActive] = useState(false)
@@ -42,24 +41,45 @@ export default (props) => {
   const focus = () =>
     component.current.focus()
 
+  const input_styles = [input_style]
   let placeholder_text = placeholder
   if (error) {
     if (placeholderActive)
-      placeholder_text = `${placeholder} - ${stream.value.error}`
+      placeholder_text = `${placeholder} - ${stream.value.errorMessage}`
+    input_styles.push({
+      borderBottomColor: '#9d0000'
+    })
   }
 
+
   return (
-    <View>
+    <View style={container_style}>
       <Placeholder placeholder={placeholder_text}
         active={placeholderActive}
         error={error}
       />
-      <TextInput ref={component}
-        {...passThrough}
+      <TextInput ref={component} style={input_styles}
+        {...props}
         onFocus={focused}
         onBlur={blurred}
         onChangeText={stream.changed}
       />
     </View>
   )
+}
+
+const container_style = {
+  position: 'relative',
+  margin: 10,
+  paddingTop: 15,
+  backgroundColor: 'transparent'
+}
+
+const input_style = {
+  height: 25,
+  paddingLeft: 2,
+  fontSize: 16,
+  color: '#888',
+  borderBottomWidth: 0.5,
+  borderBottomColor: '#999'
 }
