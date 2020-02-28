@@ -36,9 +36,9 @@ const Component = () => {
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <View style={{flex: 0.8}}>
             <Input stream={form.username} placeholder='Username'
-            autoCapitalize='none' autoCorrect={false} />
+              autoCapitalize='none' autoCorrect={false} />
             <Input stream={form.password} placeholder='Password'
-            autoCapitalize='none' autoCorrect={false} secureTextEntry={true} />
+              autoCapitalize='none' autoCorrect={false} secureTextEntry={true} />
           </View>
           </View>
         </View>

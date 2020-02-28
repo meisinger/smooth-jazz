@@ -76,8 +76,9 @@ const container_style = {
 }
 
 const input_style = {
-  height: 25,
+  padding: 0,
   paddingLeft: 2,
+  height: 25,
   fontSize: 16,
   color: '#888',
   borderBottomWidth: 0.5,
