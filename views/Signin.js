@@ -3,7 +3,7 @@ import { SafeAreaView, View, Button, StatusBar, } from 'react-native'
 import { AuthTypes, AuthLogic } from '../logic'
 import { Input } from '../components'
 
-const Component = () => {
+const Component = ({ navigation }) => {
   const form = AuthLogic.form
 
   return (
@@ -18,6 +18,7 @@ const Component = () => {
             <Input stream={form.password} placeholder='Password'
               autoCapitalize='none' autoCorrect={false} secureTextEntry={true} />
             <Button onPress={() => AuthLogic.login()} title='Hello' />
+            <Button onPress={() => navigation.navigate('Pin')} title='Test Pin' />
           </View>
           </View>
         </View>
