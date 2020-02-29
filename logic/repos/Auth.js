@@ -10,7 +10,13 @@ export default class {
     })
 
     try {
-      const { data } = await client.post('/api/auth', payload)
+      // const { data } = await client.post('/api/auth', payload)
+      const data = Object.assign({
+        access_token: 'abcdef',
+        refresh_token: '123456',
+        user_name: 'hello@who.wrong'
+      })
+
       return Promise.resolve(data)
     }
     catch (err) {

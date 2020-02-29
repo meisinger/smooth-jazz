@@ -10,7 +10,7 @@ export default class {
     this._username.asRequired('Email is required.')
     this._username.asEmail('Email is invalid.')
     this._password.asRequired('Password is required.')
-    this._password.asRule((value) => value.length > 6, 'Password is invalid.')
+    this._password.asRule((value) => value && value.length > 6, 'Password is invalid.')
   }
 
   get username() { return this._username }

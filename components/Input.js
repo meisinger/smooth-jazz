@@ -17,7 +17,7 @@ export default ({ stream, placeholder, onFocus, ...props }) => {
 
       setError(!!value.error)
       component.current
-        .setNativeProps({ text: value.data })
+        .setNativeProps({ text: value.data || null })
     })
 
     return () => stream$.unsubscribe()
