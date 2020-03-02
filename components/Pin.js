@@ -11,7 +11,7 @@ const circle_container_style = {
   width: 80,
   height: 80,
   borderRadius: 50,
-  borderWidth: 0.5,
+  borderWidth: 1,
   borderColor: '#d9d9d9',
 }
 
@@ -26,7 +26,7 @@ const indicator_style = {
   width: 15,
   height: 15,
   borderRadius: 50,
-  borderWidth: 0.5,
+  borderWidth: 1,
   borderColor: '#fefefe'
 }
 

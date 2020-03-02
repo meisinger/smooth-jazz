@@ -47,7 +47,7 @@ const Service = new class {
 
   anonymous = (config = {}, headers = {}) => {
     const request_config = Object.assign({
-      baseURL: '',
+      baseURL: 'http://10.0.2.2:5001',
       timeout: 30000,
       headers: Object.assign({
         'X-Api-Client': 'React-Native'
@@ -60,7 +60,7 @@ const Service = new class {
   authorized = async (config = {}) => {
     const access_token = await storage.getItem('access-token')
     const request_config = Object.assign({
-      baseURL: '',
+      baseURL: 'http://10.0.2.2:5001',
       timeout: 30000,
       headers: Object.assign({
         'Authorization': `bearer ${access_token}`,

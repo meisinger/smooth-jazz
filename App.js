@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { enableScreens } from 'react-native-screens'
-import { NavigationContainer } from '@react-navigation/native'
+// import { enableScreens } from 'react-native-screens'
+import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
+import { skip } from 'rxjs/operators'
 import { AuthLogic, AuthTypes } from './logic'
+import { ApiContext } from './logic/repos'
 import { Loading, Pin } from './components'
 import * as views from './views'
 
 // enable screens before
 // rendering navigation
-enableScreens()
+// enableScreens()
 
 const Main = createStackNavigator()
 const Root = createStackNavigator()
 
 const MainScreens = () => {
   const [loggedIn, setLoggedIn] = useState(false)
+  const navigation = useNavigation()
 
   useEffect(() => {
     const stream$ = AuthLogic.controller
@@ -25,7 +28,20 @@ const MainScreens = () => {
           setLoggedIn(false)
       })
 
-    return () => stream$.unsubscribe()
+    const waiting$ = ApiContext.loading
+      .pipe(skip(1))
+      .subscribe(state => {
+        if (state)
+          navigation.navigate('Loading')
+        else
+          navigation.pop()
+      })
+
+    return () => {
+      stream$.unsubscribe()
+      waiting$.unsubscribe()
+    }
+
   }, [])
 
   return (

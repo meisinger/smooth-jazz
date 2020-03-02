@@ -52,6 +52,7 @@ export default new class {
         })
       })
       .catch((_) => {
+        console.log(_)
         this._controller.set({
           type: UsersTypes.ERROR
         })
