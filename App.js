@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { skip } from 'rxjs/operators'
-import { AuthLogic, AuthTypes } from './logic'
-import { ApiContext } from './logic/repos'
+import { ApiContext, AuthLogic, AuthTypes } from './logic'
 import { Loading, Pin } from './components'
 import * as views from './views'
 
@@ -30,8 +29,8 @@ const MainScreens = () => {
 
     const waiting$ = ApiContext.loading
       .pipe(skip(1))
-      .subscribe(state => {
-        if (state)
+      .subscribe(value => {
+        if (value)
           navigation.navigate('Loading')
         else
           navigation.pop()

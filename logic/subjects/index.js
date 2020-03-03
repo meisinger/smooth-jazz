@@ -1,5 +1,6 @@
 export { default as DataSubject } from './DataSubject'
 export { default as InputSubject } from './InputSubject'
 export { default as TrueSubject } from './TrueSubject'
+export { default as FalseSubject } from './FalseSubject'
 export { default as SearchSubject } from './SearchSubject'
 export { default as PinCodeSubject } from './PinCodeSubject'

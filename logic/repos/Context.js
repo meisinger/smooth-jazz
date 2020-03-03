@@ -155,16 +155,19 @@ export default new class {
       .subscribe((state) => {
         this._manager.next((state.type === ApiContextTypes.WAITING))
 
-        if (state.type === ApiContextTypes.IDLE) {
-          this._stream_wait$.unsubscribe()
-          this._stream_wait$ = undefined
-
-          this._stream_idle$.unsubscribe()
-          this._stream_idle$ = undefined
-
-          this._stream$.unsubscribe()
-          this._stream$ = undefined
-        }
+        if (state.type === ApiContextTypes.IDLE)
+          this._wait_cleanup()
       })
+  }
+
+  _wait_cleanup = async () => {
+    this._stream_wait$.unsubscribe()
+    this._stream_wait$ = undefined
+
+    this._stream_idle$.unsubscribe()
+    this._stream_idle$ = undefined
+
+    this._stream$.unsubscribe()
+    this._stream$ = undefined
   }
 }

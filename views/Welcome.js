@@ -1,22 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, StatusBar, Button } from 'react-native'
 import { UsersLogic, UsersTypes } from '../logic'
-import { ApiContext } from '../logic/repos'
-
-const useApiActive = (context) => {
-  const [active, makingCall] = useState(false)
-
-  useEffect(() => {
-    const stream$ = ApiContext.waiting(context)
-      .subscribe(call_active => {
-        makingCall(call_active)
-      })
-
-    return () => stream$.unsubscribe()
-  }, [])
-
-  return active
-}
+import { useApiActive } from '../hooks'
 
 const Component = () => {
   const active = useApiActive(UsersLogic.API_CONTEXT)

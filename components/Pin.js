@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { TouchableWithoutFeedback, TouchableHighlight, View, Text } from 'react-native'
+import { TouchableHighlight, View, Text } from 'react-native'
 import { PinCodeSubject } from '../logic/subjects'
 
 const circle_container_style = {
@@ -86,17 +86,15 @@ export default () => {
     })
 
   return (
-    <TouchableWithoutFeedback onPress={() => navigation.navigate('Loading')}>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',  backgroundColor: 'rgba(98, 2, 182, 0.6)'}}>
-        <Text style={[circle_text_style, {margin: 20}]}>Please Enter Your Pin</Text>
-        <View style={{marginVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-          { indicators }
-        </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center' }}>
-          <Pins pins={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]} onPress={pinPressed} />
-        </View>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',  backgroundColor: 'rgba(98, 2, 182, 0.6)'}}>
+      <Text style={[circle_text_style, {margin: 20}]}>Please Enter Your Pin</Text>
+      <View style={{marginVertical: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
+        { indicators }
       </View>
-    </TouchableWithoutFeedback>
+      <View style={{flexDirection: 'row', justifyContent: 'center' }}>
+        <Pins pins={[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]} onPress={pinPressed} />
+      </View>
+    </View>
   )
 }
 

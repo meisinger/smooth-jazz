@@ -3,8 +3,7 @@ import { default as Search } from './Search'
 const predicate = (user, term) => {
   return (
     (user.firstName.toUpperCase().indexOf(term) !== -1) ||
-    (user.lastName.toUpperCase().indexOf(term) !== -1) ||
-    (user.email.toUpperCase().indexOf(term) !== -1)
+    (user.lastName.toUpperCase().indexOf(term) !== -1)
   )
 }
 

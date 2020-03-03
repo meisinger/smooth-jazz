@@ -1,8 +1,14 @@
 import storage from '@react-native-community/async-storage'
 import axios from 'axios'
+import { Platform } from 'react-native'
 
 let refreshing = false
 let requests = []
+
+const base_url = Platform.select({
+  ios: 'http://localhost:5001',
+  android: 'http://10.0.2.2:5001'
+})
 
 const token_refreshed = (token) => {
   requests = requests.filter(cb => cb(token))
@@ -47,7 +53,7 @@ const Service = new class {
 
   anonymous = (config = {}, headers = {}) => {
     const request_config = Object.assign({
-      baseURL: 'http://10.0.2.2:5001',
+      baseURL: base_url,
       timeout: 30000,
       headers: Object.assign({
         'X-Api-Client': 'React-Native'
@@ -60,7 +66,7 @@ const Service = new class {
   authorized = async (config = {}) => {
     const access_token = await storage.getItem('access-token')
     const request_config = Object.assign({
-      baseURL: 'http://10.0.2.2:5001',
+      baseURL: base_url,
       timeout: 30000,
       headers: Object.assign({
         'Authorization': `bearer ${access_token}`,
