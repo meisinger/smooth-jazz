@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { BehaviorSubject } from 'rxjs'
-import { map } from 'rxjs/operators'
 import { TouchableWithoutFeedback, TouchableHighlight, View, Text } from 'react-native'
+import { PinCodeSubject } from '../logic/subjects'
 
 const circle_container_style = {
   alignItems: 'center',
@@ -50,37 +49,6 @@ const Pins = ({ pins, onPress }) => (
   ))}
   </View>
 )
-
-class PinCodeSubject extends BehaviorSubject {
-  constructor(length) {
-    super({
-      count: 0,
-      valid: false
-    })
-
-    this._controller = new BehaviorSubject([])
-    this._controller
-      .pipe(map(x => x.length))
-      .subscribe(x => {
-        this.next({ count: x, valid: x === length })
-      })
-
-    this.length = length
-  }
-
-  dispose = () => {
-    this._controller.next([])
-  }
-
-  changed = (value) => {
-    const { value: current } = this
-    if (current.valid)
-      return
-
-    const { value: data } = this._controller
-    this._controller.next([...data, { value: value }])
-  }
-}
 
 export default () => {
   const navigation = useNavigation()
